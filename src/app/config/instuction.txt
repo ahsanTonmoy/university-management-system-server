@@ -1,0 +1,1 @@
+cretate all config files like db config ect
