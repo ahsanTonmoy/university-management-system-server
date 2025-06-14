@@ -5,6 +5,7 @@ dist
 # Logs and database files
 *.log 
 *.sqlite
+.env
 # Environment variables files
 # Build output                           
 # Dependency directories    
