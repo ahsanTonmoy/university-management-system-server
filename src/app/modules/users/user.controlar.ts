@@ -1,21 +1,26 @@
 import { userService } from "./user.service";
 import { UserValidationSchema } from "./user.validator";
 import { Request, Response } from "express";
-const createUser = async (req: Request, res: Response) => {
+const createStudent = async (req: Request, res: Response) => {
     try {
-        const user = UserValidationSchema.parse(req.body);
-        // Logic to create a user in the database
-        // Assuming we have a userService that handles database operations
-        await userService.createUser(user);
-        // This is a placeholder function, implement actual database logic here
-        console.log("Creating user:", user);
-        res.status(201).json({ message: "User created successfully", user });
+        // const validatedData = await UserValidationSchema.parseAsync(req.body);
+        const {password, student: studentData} = req.body;
+    
+        const result = await userService.createStudent(password, studentData);
+        res.status(200).json({
+            success: true,
+            message: "New student created successfully",
+            data: result,
+        });
     } catch (error) {
-        console.error("Error creating user:", error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(400).json({
+            success: false,
+            message: "Failed to create user",
+            error: error instanceof Error ? error.message : error,
+        });
     }
 }
 
 export const userController = {
-    createUser,
+    createStudent,
 };

@@ -104,4 +104,4 @@ const studentSchema = new Schema<IStudent>(
     }
 );
 
-export const Student = model<IStudent>('Student', studentSchema);
+export const Student = model<IStudent>('StudentData', studentSchema);
