@@ -1,6 +1,6 @@
 import config from "../../config";
-import { IStudent } from "./student/student.interface";
-import { Student } from "./student/student.model";
+import { IStudent } from "../student/student.interface";
+import { Student } from "../student/student.model";
 import { IUser } from "./user.interface";
 import { UserModel } from "./user.model";
 // import { Tstudent } from "./student.interface"; // Removed because file does not exist
