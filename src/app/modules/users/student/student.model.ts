@@ -30,6 +30,7 @@ const studentSchema = new Schema<IStudent>(
         user: {
             type: Schema.Types.ObjectId,
             required: true,
+            unique: true,
             ref: 'User',
         },
         name: {
@@ -37,10 +38,10 @@ const studentSchema = new Schema<IStudent>(
             required: [true, 'Name is required'],
 
         },
-        password: {
-            type: String,
-            required: true,
-        },
+        // password: {
+        //     type: String,
+        //     required: true,
+        // },
         email: {
             type: String,
             required: true,
@@ -104,4 +105,5 @@ const studentSchema = new Schema<IStudent>(
     }
 );
 
-export const Student = model<IStudent>('StudentData', studentSchema);
+
+export const Student = model<IStudent>('Student', studentSchema);

@@ -11,7 +11,7 @@ const createStudent = async (password: string, studentData: IStudent) => {
   UserData.role = 'student';
   UserData.password = password || (config.default_user_pass as string);
 
-  UserData.id = '2025010100';
+  UserData.id = '2025010101';
 
   // Create a new user object
   const newUser = await UserModel.create(UserData);
@@ -24,6 +24,7 @@ const createStudent = async (password: string, studentData: IStudent) => {
     const newStudent = await Student.create(studentData);
     return newStudent;
   }
+
 };
 
 export const userService = {
