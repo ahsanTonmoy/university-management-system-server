@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import userRoutes from './app/modules/users/user.routes';
+import  studentRoutes   from "./app/modules/student/student.routes";
 
 const app: Application = express();
 
@@ -8,7 +9,7 @@ const app: Application = express();
 app.use(express.json());
 
 app.use('/api', userRoutes);
-
+app.use('/api', studentRoutes);
 // application routes
 
 app.get('/', (req: Request, res: Response) => {
