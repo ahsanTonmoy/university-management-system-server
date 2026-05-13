@@ -1,7 +1,7 @@
 import { userService } from "./user.service";
 import { UserValidationSchema } from "./user.validator";
-import { Request, Response } from "express";
-const createStudent = async (req: Request, res: Response) => {
+import { NextFunction, Request, Response } from "express";
+const createStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // const validatedData = await UserValidationSchema.parseAsync(req.body);
         const {password, student: studentData} = req.body;
@@ -13,11 +13,7 @@ const createStudent = async (req: Request, res: Response) => {
             data: result,
         });
     } catch (error) {
-        res.status(400).json({
-            success: false,
-            message: "Failed to create user",
-            error: error instanceof Error ? error.message : error,
-        });
+        next(error);
     }
 }
 

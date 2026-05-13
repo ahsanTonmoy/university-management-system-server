@@ -1,7 +1,7 @@
 import { studentService } from "./student.service";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-const getStudents = async (req: Request, res: Response) => {
+const getStudents = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const students = await studentService.getStudents();
         res.status(200).json({
@@ -11,11 +11,7 @@ const getStudents = async (req: Request, res: Response) => {
         });
     }
     catch (error) {
-        res.status(400).json({
-            success: false,
-            message: "Failed to retrieve students",
-            error: error instanceof Error ? error.message : error,
-        });
+        next(error);
     }
 }
 // const getStudentById = async (req: Request, res: Response) => {
