@@ -42,6 +42,12 @@ userSchema.pre('save', async function (next) {
   const user = this;
   user.password = await bcrypt.hash(user.password, 10);
   next();
+
 });
+// create method for comparing password
+userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+  const user = this as IUser;
+  return bcrypt.compare(candidatePassword, user.password);
+};
 
 export const UserModel = model<IUser>('User', userSchema);
