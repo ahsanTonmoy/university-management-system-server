@@ -2,9 +2,9 @@ import { Response } from "express";
 // 
 type TResponce <T> = {
     statusCode: number,
-  success: boolean;
-  data?: T;
-  message?: string;
+    success: boolean;
+    message?: string;
+    data?: T;
 };
 // send rsesponse to client
 export const sendResponse = <T>(res: Response, data: TResponce<T>) => {
