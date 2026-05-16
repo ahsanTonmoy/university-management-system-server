@@ -1,4 +1,4 @@
-import { sendResponse } from "../../config/utils/sendResponce";
+import { sendResponse } from "../../utils/sendResponce";
 import { userService } from "./user.service";
 import { UserValidationSchema } from "./user.validator";
 import { NextFunction, Request, Response } from "express";
