@@ -4,7 +4,7 @@ import { Student } from "../student/student.model";
 import { IUser } from "./user.interface";
 import { UserModel } from "./user.model";
 // import { Tstudent } from "./student.interface"; // Removed because file does not exist
-
+// create a new student with user role
 const createStudent = async (password: string, studentData: IStudent) => {
   const UserData : Partial<IUser> = {};
 
@@ -26,7 +26,13 @@ const createStudent = async (password: string, studentData: IStudent) => {
   }
 
 };
+// get all users from database 
+const getUsers = async (): Promise<IUser[]> => {
+  const users = await UserModel.find();
+  return users;
+}
 
 export const userService = {
     createStudent,
+    getUsers,
 };
