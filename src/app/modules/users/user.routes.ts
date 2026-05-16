@@ -5,6 +5,6 @@ const router = express.Router();
 // create a new user with student role
 router.post('/create-student', userController.createStudent);
 // get all users
-router.get('/users', userController.getUsers);
+router.get('/all-users', userController.getUsers);
 
 export default router;
