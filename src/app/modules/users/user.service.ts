@@ -11,7 +11,12 @@ const createStudent = async (password: string, studentData: IStudent) => {
   UserData.role = 'student';
   UserData.password = password || (config.default_user_pass as string);
 
-  UserData.id = studentData.id;
+  //generate user id based on current year and semester
+  const currentYear = new Date().getFullYear();
+  const semester = studentData.semester;
+  const departmentCode = studentData.department.slice(0, 3).toUpperCase(); // Get first 3 letters of department and convert to uppercase
+  const uniqueId = Math.floor(1000 + Math.random() * 9000); // Generate a random 4 digit number
+  UserData.id = `${currentYear}${semester}${departmentCode}${uniqueId}`;
 
   // Create a new user object
   const newUser = await UserModel.create(UserData);
