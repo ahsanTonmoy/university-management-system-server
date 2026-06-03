@@ -1,21 +1,28 @@
 import cors from 'cors';
-import express, { Application, Request, Response } from 'express';
-import userRoutes from './app/modules/users/user.routes';
+import express, { Application, NextFunction, Request, Response } from 'express';
+
+import { globalErrorHandler } from './app/middlewares/globalErrorHandler';
+import { notFoundHandler } from './app/middlewares/notFound';
+import router from './app/routes';
 
 const app: Application = express();
 
 // parser
 app.use(express.json());
 
-app.use('/api', userRoutes);
+
 
 // application routes
+app.use('/api', router);
 
+//
 app.get('/', (req: Request, res: Response) => {
   res.send({ message: 'welcome to ph univercity server' });
 });
 
-
-//Not Found
+// global error handler
+app.use(globalErrorHandler);
+// not found handler
+app.use(notFoundHandler);
 
 export default app;

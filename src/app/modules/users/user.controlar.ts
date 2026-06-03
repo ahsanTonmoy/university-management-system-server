@@ -1,21 +1,39 @@
+import { sendResponse } from "../../utils/sendResponce";
+import { createStudentZodSchema } from "../student/studentVelidetion";
 import { userService } from "./user.service";
-import { UserValidationSchema } from "./user.validator";
-import { Request, Response } from "express";
-const createUser = async (req: Request, res: Response) => {
+import { NextFunction, Request, Response } from "express";
+import  HttpStatus  from 'http-status';
+const createStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = UserValidationSchema.parse(req.body);
-        // Logic to create a user in the database
-        // Assuming we have a userService that handles database operations
-        await userService.createUser(user);
-        // This is a placeholder function, implement actual database logic here
-        console.log("Creating user:", user);
-        res.status(201).json({ message: "User created successfully", user });
+        const {password, student: studentData} = req.body;
+        const result = await userService.createStudent(password, studentData);
+        sendResponse(res, {
+            statusCode: HttpStatus.OK,
+            success: true,
+            message: "New student created successfully",
+            data: result,
+        })
     } catch (error) {
-        console.error("Error creating user:", error);
-        res.status(500).json({ message: "Internal server error" });
+        next(error);
+    }
+}
+
+// get all users
+const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const users = await userService.getUsers();
+        sendResponse(res, {
+            statusCode: HttpStatus.OK,
+            success: true,
+            message: "users retrieved successfully",
+            data: users
+        });
+    } catch (error) {
+        next(error);
     }
 }
 
 export const userController = {
-    createUser,
+    createStudent,
+    getUsers,
 };
