@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { TacademicSemester } from "./academicSemesterInterface";
 import { academicSemesterCode } from "./academicSemestarConstant";
-
+// academic semester model
 const academicSemesterSchema = new Schema<TacademicSemester>(
     {
         title: {
@@ -27,4 +27,13 @@ const academicSemesterSchema = new Schema<TacademicSemester>(
     }
 
 )
+
+// create a pre save hook to check the semester exist or not on the database
+academicSemesterSchema.pre('save', async function (next) {
+    const isexist = await academicSemester.findOne({ title: this.title, year: this.year });
+    if (isexist) {
+        throw new Error('Academic Semester already exist');
+    }
+})
+
 export const academicSemester = model<TacademicSemester>('academicSemester', academicSemesterSchema);
