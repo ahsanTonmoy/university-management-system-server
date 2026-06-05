@@ -38,4 +38,5 @@ export interface IStudent {
     guardian: TGuardian;
     bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
     profileImageUrl?: string;
+    academicSemester: Types.ObjectId;
 }
