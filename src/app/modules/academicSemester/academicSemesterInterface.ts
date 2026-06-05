@@ -8,5 +8,4 @@ export type TacademicSemester ={
     year: string;
     startMonth: AcademicSemesterMonth;
     endMonth: AcademicSemesterMonth;
-    
 };
