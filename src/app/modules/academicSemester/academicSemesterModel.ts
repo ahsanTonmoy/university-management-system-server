@@ -1,20 +1,20 @@
 import { model, Schema } from "mongoose";
 import { TacademicSemester } from "./academicSemesterInterface";
-import { academicSemesterCode } from "./academicSemestarConstant";
+import { academicSemesterCode, academicSemesterTitle } from "./academicSemestarConstant";
 // academic semester model
 const academicSemesterSchema = new Schema<TacademicSemester>(
     {
         title: {
             type: String,
             required: true,
-            enum: academicSemesterCode,
+            enum: academicSemesterTitle,
         },
         code: {
             type: String,
             required: true,
             enum: academicSemesterCode,
         },
-        year: { type: String, required: true },
+        year: { type: Number, required: true },
         startMonth: {
             type: String,
             required: true,

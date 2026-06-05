@@ -5,7 +5,7 @@ export type TacademicSemesterMonth = 'January' | 'February' | 'March' | 'April' 
 export type TacademicSemester ={
     title: TacademicSemesterTitle;
     code: TacademicSemesterCode;
-    year: string;
+    year: number;
     startMonth: TacademicSemesterMonth;
     endMonth: TacademicSemesterMonth;
 };
