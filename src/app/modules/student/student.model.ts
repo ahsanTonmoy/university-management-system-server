@@ -99,7 +99,7 @@ const studentSchema = new Schema<IStudent>(
         profileImageUrl: {
             type: String,
         },
-        academicSemester: {
+        admissonSemester: {
             type: Schema.Types.ObjectId,
             required: true,
             ref: 'AcademicSemester',
