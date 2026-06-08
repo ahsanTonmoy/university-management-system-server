@@ -1,3 +1,4 @@
+import { error } from "console";
 import config from "../../config";
 import { academicSemester } from "../academicSemester/academicSemesterModel";
 import { IStudent } from "../student/student.interface";
@@ -15,6 +16,10 @@ const createStudent = async (password: string, payload: IStudent) => {
   const admisionSemester = await academicSemester.findById(
     payload.admissionSemester,
   );
+
+  if(!admisionSemester){
+    throw new Error("admisson semester not found")
+  }
   UserData.id = await generateStudentId(admisionSemester);
   
   // Create a new user object
