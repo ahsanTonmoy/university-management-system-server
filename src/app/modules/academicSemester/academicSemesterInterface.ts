@@ -4,8 +4,10 @@ export type TacademicSemesterMonth = 'January' | 'February' | 'March' | 'April' 
 // academic semester interface
 export type TacademicSemester ={
     title: TacademicSemesterTitle;
-    code: TacademicSemesterCode;
     year: string;
+    code: TacademicSemesterCode;
     startMonth: TacademicSemesterMonth;
     endMonth: TacademicSemesterMonth;
 };
+
+// create academic code mapping

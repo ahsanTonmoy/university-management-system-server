@@ -18,7 +18,7 @@ export const academicSemesterMonth = [
 ];
 
 export const academicSemesterTitleCodeMapper: {
-  [key in TacademicSemesterTitle]: TacademicSemesterCode;
+  [key : string]: string;
 } = {
   Autumn: '01',
   Summer: '02',

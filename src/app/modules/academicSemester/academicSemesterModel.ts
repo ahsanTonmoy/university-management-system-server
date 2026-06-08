@@ -9,12 +9,13 @@ const academicSemesterSchema = new Schema<TacademicSemester>(
             required: true,
             enum: academicSemesterTitle,
         },
+        year: { type: String, required: true },
         code: {
             type: String,
             required: true,
             enum: academicSemesterCode,
         },
-        year: { type: String, required: true },
+        
         startMonth: {
             type: String,
             required: true,
@@ -36,4 +37,4 @@ academicSemesterSchema.pre('save', async function (next) {
     }
 })
 
-export const academicSemester = model<TacademicSemester>('academicSemester', academicSemesterSchema);
+export const academicSemester = model<TacademicSemester>('AcademicSemester', academicSemesterSchema);

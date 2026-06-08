@@ -35,8 +35,8 @@ const getAcademicSemesters = async (req: Request, res: Response, next: NextFunct
 // get single academic semester from database
 const getAcademicSemester = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.params;
-        const result = await academicSemesterService.getAcademicSemesterFromDB(id);
+        const { semesterId } = req.params;
+        const result = await academicSemesterService.getAcademicSemesterFromDB(semesterId);
         sendResponse(res, {
             statusCode: HttpStatus.OK,
             success: true,
