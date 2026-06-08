@@ -36,7 +36,7 @@ export const createStudentZodSchema = z.object({
         motherOccupation: z.string().max(100),
         motherContactNo: z.string().max(15),
       }),
-     academicSemester: z.string().max(100).optional(),
+     academicSemester: z.string().optional(),
     }),
   }),
 });
