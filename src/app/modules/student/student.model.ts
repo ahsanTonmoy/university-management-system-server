@@ -36,7 +36,6 @@ const studentSchema = new Schema<IStudent>(
         name: {
             type: userNameSchema,
             required: [true, 'Name is required'],
-
         },
         // password: {
         //     type: String,
@@ -98,6 +97,11 @@ const studentSchema = new Schema<IStudent>(
         },
         profileImageUrl: {
             type: String,
+        },
+        admissionSemester: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'AcademicSemester',
         },
     },
     {
