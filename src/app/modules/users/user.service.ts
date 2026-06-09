@@ -1,4 +1,3 @@
-import { error } from "console";
 import config from "../../config";
 import { academicSemester } from "../academicSemester/academicSemesterModel";
 import { IStudent } from "../student/student.interface";
