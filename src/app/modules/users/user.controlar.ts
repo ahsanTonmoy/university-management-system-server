@@ -33,7 +33,61 @@ const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+// get user by id
+const getUserById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const user = await userService.getUserById(id);
+        sendResponse(res, {
+            statusCode: HttpStatus.OK,
+            success: true,
+            message: "user retrieved successfully",
+            data: user
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+// update user
+const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const userData = req.body;
+        const user = await userService.updateUser(id, userData);
+        sendResponse(res, {
+            statusCode: HttpStatus.OK,
+            success: true,
+            message: "user updated successfully",
+            data: user
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+// delete user
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const user = await userService.deleteUser(id);
+        sendResponse(res, {
+            statusCode: HttpStatus.OK,
+            success: true,
+            message: "user deleted successfully",
+            data: user
+    })
+
+    } catch (error) {
+        next(error);
+    }
+}
+    
+
 export const userController = {
     createStudent,
     getUsers,
+    getUserById,
+    updateUser,
+    deleteUser,
 };

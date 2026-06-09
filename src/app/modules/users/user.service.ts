@@ -37,7 +37,33 @@ const getUsers = async (): Promise<IUser[]> => {
   return users;
 }
 
+// get user by id
+const getUserById = async (id: string): Promise<IUser | null> => {
+  const user = await UserModel.findById(id);
+  return user;
+}
+
+// update user 
+const updateUser = async (id: string, userData: Partial<IUser>): Promise<IUser | null> => {
+  const user = await UserModel.findByIdAndUpdate(id, userData, { new: true });
+  return user;
+}
+
+// delete user\
+const deleteUser = async (id: string): Promise<IUser | null> => {
+  const user = await UserModel.findByIdAndDelete(id);
+  return user;
+}
+
+// export services
+
+
 export const userService = {
     createStudent,
     getUsers,
+    getUserById,
+    updateUser,
+    deleteUser,
+
+
 };
