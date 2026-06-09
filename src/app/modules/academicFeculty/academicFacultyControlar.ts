@@ -18,7 +18,7 @@ const createAcademicFaculty = async (req: Request, res:Response, next: NextFunct
     }
 }
 
-// create academic faculty responce
+// get academic faculty responce
 const getAcademicFaculty =  async (req: Request, res:Response, next: NextFunction) =>{
     try {
         const academicFaculty = await acdemicFacultyService.getAcademicFacultyFromDB();
@@ -33,7 +33,27 @@ const getAcademicFaculty =  async (req: Request, res:Response, next: NextFunctio
     }
 }
 
+// get single academic Faculty useing id
+const getSingleAcademicFacultyById = async (req: Request, res:Response, next: NextFunction) =>{
+    try {
+        const {id} = req.params;
+        const result = await acdemicFacultyService.getSingleAcademicFacultyFromDB(id);
+        sendResponse(res,{
+            statusCode: httpStatus.OK,
+            success: true,
+            message: `${result?.name} Faculty retrieved successfully`,
+            data: result
+        }
+        )
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 export const academicFacultyControlar = {
     createAcademicFaculty,
-    getAcademicFaculty
+    getAcademicFaculty,
+    getSingleAcademicFacultyById
+
 }

@@ -13,8 +13,17 @@ const getAcademicFacultyFromDB= async () => {
     return result;
 }
 
+// get single data using id
+const getSingleAcademicFacultyFromDB = async (id: string) => {
+  const result = await academicFaculty.findById(id);
+
+  return result;
+};
+
+
 
 export const acdemicFacultyService ={
     createAcedemicFacultyFromDB,
-    getAcademicFacultyFromDB
+    getAcademicFacultyFromDB,
+    getSingleAcademicFacultyFromDB
 }
