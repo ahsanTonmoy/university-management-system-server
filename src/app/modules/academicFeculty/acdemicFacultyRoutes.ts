@@ -16,5 +16,10 @@ router.get('/academic-faculties',academicFacultyControlar.getAcademicFaculty)
 // get single academic faculty
 router.get('/:id',academicFacultyControlar.getSingleAcademicFacultyById)
 
+// update acdemic faculty
+router.patch('/:id',academicFacultyControlar.updateAcademicFaculty)
+
+// delete faculty
+router.delete('/:id',academicFacultyControlar.deleteAcademicFaculty)
 
 export const academicFacultyRoutes = router;

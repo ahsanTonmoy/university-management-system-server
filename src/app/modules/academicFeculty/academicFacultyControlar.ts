@@ -50,10 +50,44 @@ const getSingleAcademicFacultyById = async (req: Request, res:Response, next: Ne
     }
 }
 
+// update academic faculty
+const updateAcademicFaculty = async (req: Request, res:Response, next: NextFunction) =>{
+    try {
+        const {id} = req.params;
+        const result = await acdemicFacultyService.updateAcademicFacultyFromDB(id,req.body);
+        sendResponse(res,{
+            statusCode: httpStatus.OK,
+            success: true,
+            message: `${result?.name} Faculty updated successfully`,
+            data: result
+        }
+        )
+    } catch (error) {
+        next(error)
+    }     
+}
+
+// delete academic faculty
+const deleteAcademicFaculty = async (req: Request, res:Response, next: NextFunction) =>{{
+    try {
+        const id = req.params.id;
+        const result = await acdemicFacultyService.deleteAcademicFacultyFromDB(id);
+        sendResponse(res,{
+            statusCode: httpStatus.OK,
+            success: true,
+            message: `${result?.name} Faculty deleted successfully`,
+
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+}
 
 export const academicFacultyControlar = {
     createAcademicFaculty,
     getAcademicFaculty,
-    getSingleAcademicFacultyById
-
+    getSingleAcademicFacultyById,
+    updateAcademicFaculty,
+    deleteAcademicFaculty
 }

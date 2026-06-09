@@ -20,10 +20,26 @@ const getSingleAcademicFacultyFromDB = async (id: string) => {
   return result;
 };
 
+// update academic faculty
+const updateAcademicFacultyFromDB = async (id: string, payload: Partial<TacademicFaculty>) => {
+  const result = await academicFaculty.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
 
+// delete academic faculty
+const deleteAcademicFacultyFromDB = async (id: string) => {
+  const result = await academicFaculty.findByIdAndDelete(id);
+  return result;
+};
 
 export const acdemicFacultyService ={
     createAcedemicFacultyFromDB,
     getAcademicFacultyFromDB,
-    getSingleAcademicFacultyFromDB
+    getSingleAcademicFacultyFromDB,
+    updateAcademicFacultyFromDB,
+    deleteAcademicFacultyFromDB
+
+
 }
