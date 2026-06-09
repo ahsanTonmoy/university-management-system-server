@@ -9,13 +9,23 @@ const findLastStudentId = async () => {
         { id: 1, _id: 0 }).sort({ createdAt: -1 })
         .lean();
     
-    return lastStudent?.id ? lastStudent.id.substring(6) : undefined;
+    return lastStudent?.id ? lastStudent.id : undefined;
 }
 // Generate a student ID based on the academic semester information
 export const generateStudentId = async (payload: TacademicSemester) => {
-    const currentId = await findLastStudentId()||(0).toString();
+    let currentId =(0).toString();
+    //
+    const lastStudentId = await findLastStudentId();
+    const lastSemesteraYear = lastStudentId?.substring(0,4);
+    const lastSemesterCode = lastStudentId?.substring(4,6);
+    const currentYear = payload.year;
+    const currentSemesterCode= payload.code;
+    if(lastStudentId && lastSemesterCode === currentSemesterCode && lastSemesteraYear === currentYear ){
+        currentId = lastStudentId.substring(6)
+    }
     let incrementedId = (Number(currentId) + 1).toString().padStart(4, '0');
     incrementedId = `${payload.year}${payload.code}${incrementedId}`;
     return incrementedId;
    
 }
+
