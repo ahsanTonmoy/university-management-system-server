@@ -4,11 +4,15 @@ import { createAcademicFacultyValidationSchema } from './academicFacultyValideti
 import { academicFacultyControlar } from './cademicFacultyControlar';
 //
 const router = express.Router();
-
-router.post('/create-academicFeculty',
+// create academicFaculty
+router.post('/create-academicFaculty',
     validateRequest(createAcademicFacultyValidationSchema),
     academicFacultyControlar.createAcademicFaculty
 )
+
+// get all academicFaculty
+router.get('/academic-faculties',academicFacultyControlar.getAcademicFaculty)
+
 
 
 export const academicFacultyRoutes = router;

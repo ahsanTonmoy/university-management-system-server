@@ -8,8 +8,13 @@ const createAcedemicFacultyFromDB= async(payload: TacademicFaculty)=>{
 }
 
 // get all academic Facalty
+const getAcademicFacultyFromDB= async () => {
+    const result = await academicFaculty.find();
+    return result;
+}
 
 
 export const acdemicFacultyService ={
-    createAcedemicFacultyFromDB
+    createAcedemicFacultyFromDB,
+    getAcademicFacultyFromDB
 }
