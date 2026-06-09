@@ -3,7 +3,11 @@ import { studentController } from "./student.controlar";
 // 
 const router = express.Router();
 router.get("/all-students", studentController.getStudents);
-// router.get("/:id", studentController.getStudentById);
-// router.put("/:id", studentController.updateStudent);
-// router.delete("/:id", studentController.deleteStudent);
+// student find by id
+router.get("/:id", studentController.findStudentById);
+// update student
+router.put("/:id", studentController.updateStudent);
+// delete
+router.delete("/:id", studentController.deleteStudent);
+
 export default router;

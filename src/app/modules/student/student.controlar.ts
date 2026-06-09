@@ -20,34 +20,64 @@ const getStudents = async (req: Request, res: Response, next: NextFunction) => {
         next(error);
     }
 }
-// const getStudentById = async (req: Request, res: Response) => {
-//     const { id } = req.params;
-//     const student = await studentService.getStudentById(id);\
-//     if (!student) {
-//         return res.status(404).json({ message: 'Student not found' });
-//     }
-//     res.json(student);
-// }
-// const updateStudent = async (req: Request, res: Response) => {
-//     const { id } = req.params;
-//     const studentData = req.body;
-//     const student = await studentService.updateStudent(id, studentData);
-//     if (!student) {
-//         return res.status(404).json({ message: 'Student not found' });
-//     }
-//     res.json(student);
-// }
-// const deleteStudent = async (req: Request, res: Response) => {
-//     const { id } = req.params;
-//     const student = await studentService.deleteStudent(id);
-//     if (!student) {
-//         return res.status(404).json({ message: 'Student not found' });
-//     }
-//     res.json({ message: 'Student deleted successfully' });
-// }
+
+// find student using id
+const findStudentById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const student = await studentService.getStudentById(id);
+        sendResponse(res, {
+            statusCode: HttpStatus.OK,
+            success: true,
+            data: student,
+            message: "Student retrieved successfully"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+// update student info
+const updateStudent = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const studentData = req.body;
+        const student = await studentService.updateStudent(id, studentData);
+        sendResponse(res, {
+            statusCode: HttpStatus.OK,
+            success: true,
+            data: student,
+            message: "Student updated successfully"
+        });
+    }
+    catch (error) {
+        next(error);
+    }       
+}
+
+// DELETE STUDENT   
+const deleteStudent = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id= req.params.id;
+        const student = await studentService.deleteStudent(id);
+        sendResponse(res, {
+            statusCode: HttpStatus.OK,
+            success: true,
+            data: student,
+            message: "Student deleted successfully"
+
+        });
+
+    }
+    catch(error){
+        next(error);
+    }
+}
+
 export const studentController = {
     getStudents,
-    // getStudentById,
-    // updateStudent,
-    // deleteStudent
+    findStudentById,
+    updateStudent,
+    deleteStudent
 };
