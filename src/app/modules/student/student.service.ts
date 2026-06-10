@@ -2,12 +2,16 @@ import { IStudent } from "./student.interface";
 import { Student } from "./student.model";
 
 const getStudents = async (): Promise<IStudent[]> => {
-    const students = await Student.find().populate('user');
+    const students = await Student.find()
+    .populate('user')
+    .populate('admissionSemester');
     return students;
 }
 
 const getStudentById = async (id: string): Promise<IStudent | null> => {
-    const student = await Student.findById(id).populate('user');
+    const student = await Student.findById(id)
+    .populate('user')
+    .populate('admissionSemester');;
     return student;
 }
 
