@@ -8,13 +8,22 @@ const getStudents = async (): Promise<IStudent[]> => {
     const students = await Student.find()
     .populate('user')
     .populate('admissionSemester');
+
+    // console.log(students);
+    if(students.length == 0){
+        throw new AppError(httpStatus.NOT_FOUND, "No students found");
+    }
     return students;
 }
 // find single student using student id
 const getStudentById = async (id: string): Promise<IStudent | null> => {
     const student = await Student.findOne({id})
     .populate('user')
-    .populate('admissionSemester');;
+    .populate('admissionSemester');
+    //
+    if(!student){
+        throw new AppError(httpStatus.NOT_FOUND, "Student not found");
+    }
     return student;
 }
 // update student info
