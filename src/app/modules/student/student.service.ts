@@ -5,8 +5,24 @@ import { Student } from "./student.model";
 import  httpStatus  from 'http-status';
 
 // get all students
-const getStudents = async (): Promise<IStudent[]> => {
-    const students = await Student.find()
+const getStudents = async (query: Record<string, unknown>): Promise<IStudent[]> => {
+    
+    // search fild
+    let searchQuery: Record<string, unknown> = {};
+
+    if(query?.searchTerm){
+        searchQuery = {
+            $or: [
+                { 'name.firstName': { $regex: query.searchTerm, $options: 'i' } },
+                { 'name.lastName': { $regex: query.searchTerm, $options: 'i' } },
+                { 'email': { $regex: query.searchTerm, $options: 'i' } },
+            ],
+        
+        }
+    }
+
+    
+    const students = await Student.find(searchQuery)
     .populate('user')
     .populate('admissionSemester');
 
