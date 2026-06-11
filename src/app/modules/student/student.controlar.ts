@@ -42,7 +42,7 @@ const findStudentById = async (req: Request, res: Response, next: NextFunction) 
 const updateStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const studentData = req.body;
+        const studentData = req.body.student;
         const student = await studentService.updateStudent(id, studentData);
         sendResponse(res, {
             statusCode: HttpStatus.OK,

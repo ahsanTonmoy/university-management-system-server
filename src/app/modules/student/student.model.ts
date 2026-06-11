@@ -103,11 +103,17 @@ const studentSchema = new Schema<IStudent>(
             required: true,
             ref: 'AcademicSemester',
         },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamps: true,
     }
 );
+
+//
 
 
 export const Student = model<IStudent>('Student', studentSchema);
