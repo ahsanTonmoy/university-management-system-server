@@ -10,8 +10,8 @@ type TResponce <T> = {
 export const sendResponse = <T>(res: Response, data: TResponce<T>) => {
   res.status(data.statusCode).json({
     success: data.success,
+    message: data.message,
     data: data.data,
-    message: data.message
   });
 };
 

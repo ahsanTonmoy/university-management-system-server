@@ -60,7 +60,13 @@ const updateUserNameSchema = z.object({
    firstName: z.string().max(20).optional(),
     lastName: z.string().max(20).optional(),
 });
-
+// local gardian 
+const updateLocalGuardianSchema = z.object({
+    name: z.string().max(20).optional(),
+    occupation: z.string().max(20).optional(),
+    contactNo: z.string().max(15).optional(),
+    address: z.string().max(30).optional(),
+});
 // gardian info schema
 const updateGuardianSchema = z.object({
     fatherName: z.string().max(20).optional(),
@@ -71,18 +77,12 @@ const updateGuardianSchema = z.object({
     motherContactNo: z.string().max(15).optional(),
 });
 
-// local gardian 
-const updateLocalGuardianSchema = z.object({
-    name: z.string().max(20).optional(),
-    occupation: z.string().max(20).optional(),
-    contactNo: z.string().max(15).optional(),
-    address: z.string().max(30).optional(),
-});
+
 // update student schema
 export const updateStudentSchema = z.object({
   body: z.object({
     student: z.object({
-      name: updateUserNameSchema,
+      name: updateUserNameSchema.optional(),
       email: z.string().email({ message: "Invalid email address" }).optional(),
       emergencyContactNo: z.string().max(15).optional(),
       department: z.string().max(100).optional(),
@@ -95,8 +95,8 @@ export const updateStudentSchema = z.object({
       contactNo: z.string().max(20).optional(),
       permanentAddress: z.string().max(200).optional(),
       presentAddress: z.string().max(200).optional(),
-      localGuardian: updateLocalGuardianSchema, 
-      guardian: updateGuardianSchema,
+      localGuardian: updateLocalGuardianSchema.optional(), 
+      guardian: updateGuardianSchema.optional(),
       admissionSemester: z.string().optional(),
     }),
   }),
