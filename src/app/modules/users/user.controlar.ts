@@ -1,8 +1,9 @@
 import { sendResponse } from "../../utils/sendResponce";
-import { createStudentZodSchema } from "../student/studentVelidetion";
 import { userService } from "./user.service";
 import { NextFunction, Request, Response } from "express";
 import  HttpStatus  from 'http-status';
+
+// create user as student role
 const createStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {password, student: studentData} = req.body;
@@ -66,22 +67,6 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-// delete user
-const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { id } = req.params;
-        const user = await userService.deleteUser(id);
-        sendResponse(res, {
-            statusCode: HttpStatus.OK,
-            success: true,
-            message: "user deleted successfully",
-            data: user
-    })
-
-    } catch (error) {
-        next(error);
-    }
-}
     
 
 export const userController = {
@@ -89,5 +74,4 @@ export const userController = {
     getUsers,
     getUserById,
     updateUser,
-    deleteUser,
 };

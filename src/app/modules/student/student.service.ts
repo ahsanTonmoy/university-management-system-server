@@ -4,6 +4,7 @@ import { IStudent } from "./student.interface";
 import { Student } from "./student.model";
 import  httpStatus  from 'http-status';
 
+// get all students
 const getStudents = async (): Promise<IStudent[]> => {
     const students = await Student.find()
     .populate('user')
@@ -22,7 +23,7 @@ const getStudentById = async (id: string): Promise<IStudent | null> => {
     .populate('admissionSemester');
     //
     if(!student){
-        throw new AppError(httpStatus.NOT_FOUND, "Student not found");
+        throw new AppError(httpStatus.NOT_FOUND, "Students not found");
     }
     return student;
 }
@@ -90,9 +91,7 @@ const deleteStudent = async (id: string) => {
 
 }
 
-
-
-
+// create student service
 export const studentService = {
     getStudents,
     getStudentById,

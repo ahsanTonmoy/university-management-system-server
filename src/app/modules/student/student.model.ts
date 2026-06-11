@@ -1,10 +1,11 @@
 import { Schema, model } from 'mongoose';
 import { IStudent, TGuardian, TUserName, TLocalGuardian } from './student.interface';
+// name schema
 const userNameSchema = new Schema<TUserName>({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
 });
-
+// gardian schema
 const guardianSchema = new Schema<TGuardian>({
     fatherName: { type: String, required: true },
     fatherOccupation: { type: String, required: true },
@@ -13,13 +14,15 @@ const guardianSchema = new Schema<TGuardian>({
     motherOccupation: { type: String, required: true },
     motherContactNo: { type: String, required: true },
 });
-// 
+// local gardian schema
 const localGuardianSchema = new Schema<TLocalGuardian>({
     name: { type: String, required: true },
     occupation: { type: String, required: true },
     contactNo: { type: String, required: true },
     address: { type: String, required: true },
 });
+
+// student schema
 const studentSchema = new Schema<IStudent>(
     {
         id: {

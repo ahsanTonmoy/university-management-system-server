@@ -8,7 +8,7 @@ import { UserModel } from "./user.model";
 import { generateStudentId } from "./userUtills";
 import AppError from "../../errors/appErrors";
 import  httpStatus  from 'http-status';
-// // create a new student with user role with 
+// // create a new user as student role  
 const createStudent = async (password: string, payload: IStudent) => {
   const UserData : Partial<IUser> = {};
 

@@ -75,6 +75,7 @@ const deleteStudent = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
+// student controlar
 export const studentController = {
     getStudents,
     findStudentById,
