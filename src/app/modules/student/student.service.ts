@@ -1,3 +1,4 @@
+// import QueryBuilder from "../../builders/queryBuilders";
 import AppError from "../../errors/appErrors";
 import { UserModel } from "../users/user.model";
 import { IStudent } from "./student.interface";
@@ -6,31 +7,79 @@ import  httpStatus  from 'http-status';
 
 // get all students
 const getStudents = async (query: Record<string, unknown>): Promise<IStudent[]> => {
-    
-    // search fild
-    let searchQuery: Record<string, unknown> = {};
+    // query copy
+    const queryObj = {...query};
 
-    if(query?.searchTerm){
-        searchQuery = {
-            $or: [
-                { 'name.firstName': { $regex: query.searchTerm, $options: 'i' } },
-                { 'name.lastName': { $regex: query.searchTerm, $options: 'i' } },
-                { 'email': { $regex: query.searchTerm, $options: 'i' } },
-            ],
-        
-        }
+    const searchField = ["name.firstName","name.lastName","email","id"]
+    // search fild
+    let searchTerm = '';
+    console.log("base query",query)
+    
+
+    if (query?.searchTerm) {
+        searchTerm = query?.searchTerm as string
     }
 
+    // searchQuery
+    const searchQuery= Student.find({
+        $or: searchField.map((field)=>({
+            [field]: {$regex: searchTerm, $options: "i"}
+        }))
+    })
+
+    // filtering
+    // excloud methods
+    const excloudsFields= ['searchTerm','sort','limit','page','skip','fields']
+    excloudsFields.forEach((el) => delete queryObj[el])
     
-    const students = await Student.find(searchQuery)
-    .populate('user')
+    console.log("query",queryObj)
+    const filterQuery = searchQuery.find(queryObj)
+     .populate('user')
     .populate('admissionSemester');
 
-    // console.log(students);
-    if(students.length == 0){
-        throw new AppError(httpStatus.NOT_FOUND, "No students found");
+
+    // sorting
+    let sort = '-createdAt'; //-deaccending
+
+    if (query?.sort) {
+        sort = query.sort as string 
     }
-    return students;
+
+    const sortQuery = filterQuery.sort(sort);
+
+    //limiting
+    let limit = 1
+    if (query?.limit) {
+        limit = Number(query?.limit)
+    }
+
+    const limitQuery = sortQuery.limit(limit)
+    // pageinetion
+
+    let page= 1;
+    let skip = 1;
+    if (query?.page) {
+        page = Number(query?.page)
+        skip = (page - 1)* limit
+    }
+
+    const pagenetion = limitQuery.skip(skip)
+
+    //
+    let fields ='-__v'
+    if (query?.fields) {
+        fields = (query?.fields as string).split(',').join(' ');
+    }
+
+    const fieldsQuery= limitQuery.select(fields)
+
+    const result = await fieldsQuery;
+
+    // console.log(students);
+    if(result.length == 0){
+        throw new AppError(httpStatus.NOT_FOUND, "student data don't found");
+    }
+    return result;
 }
 // find single student using student id
 const getStudentById = async (id: string): Promise<IStudent | null> => {

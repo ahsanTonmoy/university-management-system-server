@@ -5,7 +5,6 @@ import  HttpStatus  from 'http-status';
 
 const getStudents = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log(req.query)
         // get all students from database
         const students = await studentService.getStudents(req.query);
         // send response to client
