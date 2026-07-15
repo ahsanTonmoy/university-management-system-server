@@ -39,4 +39,6 @@ export interface IStudent {
     bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
     profileImageUrl?: string;
     admissionSemester: Types.ObjectId;
+    isDeleted: boolean;
+
 }
