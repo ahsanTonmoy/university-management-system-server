@@ -24,7 +24,7 @@ const getStudents = async (req: Request, res: Response, next: NextFunction) => {
 const findStudentById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const student = await studentService.getStudentById(id);
+        const student = await studentService.getStudentById(id as string);
         sendResponse(res, {
             statusCode: HttpStatus.OK,
             success: true,
@@ -42,7 +42,7 @@ const updateStudent = async (req: Request, res: Response, next: NextFunction) =>
     try {
         const { id } = req.params;
         const studentData = req.body.student;
-        const student = await studentService.updateStudent(id, studentData);
+        const student = await studentService.updateStudent(id as string, studentData);
         sendResponse(res, {
             statusCode: HttpStatus.OK,
             success: true,
@@ -59,7 +59,7 @@ const updateStudent = async (req: Request, res: Response, next: NextFunction) =>
 const deleteStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id= req.params.id;
-        const student = await studentService.deleteStudent(id);
+        const student = await studentService.deleteStudent(id as string);
         sendResponse(res, {
             statusCode: HttpStatus.OK,
             success: true,
