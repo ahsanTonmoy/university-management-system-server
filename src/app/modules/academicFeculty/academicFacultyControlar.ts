@@ -37,7 +37,7 @@ const getAcademicFaculty =  async (req: Request, res:Response, next: NextFunctio
 const getSingleAcademicFacultyById = async (req: Request, res:Response, next: NextFunction) =>{
     try {
         const {id} = req.params;
-        const result = await acdemicFacultyService.getSingleAcademicFacultyFromDB(id);
+        const result = await acdemicFacultyService.getSingleAcademicFacultyFromDB(id as string);
         sendResponse(res,{
             statusCode: httpStatus.OK,
             success: true,
@@ -54,7 +54,7 @@ const getSingleAcademicFacultyById = async (req: Request, res:Response, next: Ne
 const updateAcademicFaculty = async (req: Request, res:Response, next: NextFunction) =>{
     try {
         const {id} = req.params;
-        const result = await acdemicFacultyService.updateAcademicFacultyFromDB(id,req.body);
+        const result = await acdemicFacultyService.updateAcademicFacultyFromDB(id as string,req.body);
         sendResponse(res,{
             statusCode: httpStatus.OK,
             success: true,
@@ -71,7 +71,7 @@ const updateAcademicFaculty = async (req: Request, res:Response, next: NextFunct
 const deleteAcademicFaculty = async (req: Request, res:Response, next: NextFunction) =>{{
     try {
         const id = req.params.id;
-        const result = await acdemicFacultyService.deleteAcademicFacultyFromDB(id);
+        const result = await acdemicFacultyService.deleteAcademicFacultyFromDB(id as string);
         sendResponse(res,{
             statusCode: httpStatus.OK,
             success: true,

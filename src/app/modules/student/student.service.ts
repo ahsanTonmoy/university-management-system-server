@@ -8,8 +8,6 @@ import  httpStatus  from 'http-status';
 
 // get all students
 const getStudents = async (query: Record<string, unknown>): Promise<IStudent[]> => {
-   
-
     const student = new QueryBuilder(Student.find()
     .populate('user')
     .populate('admissionSemester'), query)

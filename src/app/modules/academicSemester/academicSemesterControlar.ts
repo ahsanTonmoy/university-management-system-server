@@ -36,7 +36,7 @@ const getAcademicSemesters = async (req: Request, res: Response, next: NextFunct
 const getAcademicSemester = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { semesterId } = req.params;
-        const result = await academicSemesterService.getAcademicSemesterFromDB(semesterId);
+        const result = await academicSemesterService.getAcademicSemesterFromDB(semesterId as string);
         sendResponse(res, {
             statusCode: HttpStatus.OK,
             success: true,
