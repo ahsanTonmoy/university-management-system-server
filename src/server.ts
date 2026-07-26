@@ -13,11 +13,6 @@ let server: Server;
 
 async function main() {
   try {
-    // console.log('==============================');
-    // console.log('NODE_ENV:', config.NODE_ENV);
-    // console.log('PORT:', config.port);
-    // console.log('DATABASE_URL:', config.database_url);
-    // console.log('==============================');
 
     await mongoose.connect(config.database_url as string);
 
