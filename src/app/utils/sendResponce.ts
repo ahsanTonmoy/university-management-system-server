@@ -4,6 +4,7 @@ type TResponce <T> = {
     statusCode: number,
     success: boolean;
     message?: string;
+    length?: number;
     data?: T;
 };
 // send rsesponse to client
@@ -11,6 +12,7 @@ export const sendResponse = <T>(res: Response, data: TResponce<T>) => {
   res.status(data.statusCode).json({
     success: data.success,
     message: data.message,
+    length: data.length,
     data: data.data,
   });
 };
