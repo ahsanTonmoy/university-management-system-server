@@ -19,6 +19,23 @@ const createStudent = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
+// create user as faculty role
+const createFaculty= async (req: Request, res: Response, next: NextFunction) =>{
+    try {
+        const { password, faculty: facultyData } = req.body;
+        const result = await userService.createFaculty(password, facultyData);
+        sendResponse(res, {
+                statusCode: HttpStatus.OK,
+                success: true,
+                message: "New faculty created successfully",
+                data: result,
+            })
+    } catch (error) {
+        next(error)
+    }
+   
+}
+
 // get all users
 const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -71,6 +88,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
 export const userController = {
     createStudent,
+    createFaculty,
     getUsers,
     getUserById,
     updateUser,

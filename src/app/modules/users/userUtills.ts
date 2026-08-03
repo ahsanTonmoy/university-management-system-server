@@ -1,6 +1,6 @@
 import { TacademicSemester } from "../academicSemester/academicSemesterInterface";
 import { UserModel } from "./user.model";
-
+// student id
 //find the last student id and increment it by 1 and return the new id
 const findLastStudentId = async () => {
     // Get the last student document from the database
@@ -27,5 +27,31 @@ export const generateStudentId = async (payload: TacademicSemester) => {
     incrementedId = `${payload.year}${payload.code}${incrementedId}`;
     return incrementedId;
    
+}
+
+// faculty id
+// find last faculty id
+const findLastFacultyId = async ()=>{
+    const lastFaculty = await UserModel.findOne(
+        { role: 'faculty'},
+        {id: 1, _id:0}
+    ).sort({ createdAt: -1 }).lean()
+
+    return lastFaculty?.id ? lastFaculty?.id : undefined;
+}
+//generate new id
+export const generateFacultyId = async ( )=>{
+    let currentId = (0).toString();
+    const currentYear = new Date().getFullYear().toString();
+    const lastFaculty = await findLastFacultyId();
+
+    if(lastFaculty && lastFaculty.startsWith(currentYear)){
+        currentId = lastFaculty.substring(5)
+    }
+
+    let createdId = (Number(currentId)+1).toString().padStart(4,'0');
+    createdId = `${currentYear}F${createdId}`;
+    return createdId;
+
 }
 
