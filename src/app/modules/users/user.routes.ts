@@ -3,9 +3,12 @@ import express from 'express';
 import { userController } from './user.controlar';
 import { validateRequest } from '../../middlewares/valiedeRequest';
 import { createStudentZodSchema } from '../student/studentVelidetion';
+import { createFacultyValidationSchema } from '../faculty/faculty.validetion';
 const router = express.Router();
 // create a new user with student role
 router.post('/create-student', validateRequest(createStudentZodSchema), userController.createStudent);
+// create a new user with student role
+router.post('/create-faculty', validateRequest(createFacultyValidationSchema), userController.createFaculty);
 // get all users
 router.get('/all-users', userController.getUsers);
 // get user by id
