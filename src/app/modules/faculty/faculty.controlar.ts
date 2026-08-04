@@ -19,6 +19,64 @@ const getAllFaculty = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
+// find faculty using id
+const singleFaculty = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const faculty = await facultyService.singleFaculty(id as string);
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            data: faculty,
+            message: "faculty retrieved successfully"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+// update faculty info
+const updateFaculty = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const facultyData = req.body.faculty;
+        const faculty = await facultyService.updateFaculty(id as string, facultyData);
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            data: faculty,
+            message: "faculty updated successfully"
+        });
+    }
+    catch (error) {
+        next(error);
+    }       
+}
+
+// DELETE facult   
+const deleteFaculty = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id= req.params.id;
+        const Faculty = await facultyService.deleteFaculty(id as string);
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            data: Faculty,
+            message: "Student deleted successfully"
+
+        });
+
+    }
+    catch(error){
+        next(error);
+    }
+}
+
 export const facultyControlar = {
-    getAllFaculty
+    getAllFaculty,
+    singleFaculty,
+    updateFaculty,
+    deleteFaculty
+    
 }
