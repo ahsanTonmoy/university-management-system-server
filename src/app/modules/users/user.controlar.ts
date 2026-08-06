@@ -36,6 +36,26 @@ const createFaculty= async (req: Request, res: Response, next: NextFunction) =>{
    
 }
 
+// Create Admin 
+const createAdmin = async (req: Request, res: Response, next: NextFunction) =>{
+    try {
+        const { password, admin: adminData } = req.body;
+        const result = await userService.createAdmin(password, adminData);
+        sendResponse(res, 
+            { 
+                statusCode: HttpStatus.CREATED,
+                success: true,
+                message: 'Admin created successfully', 
+                data: result,
+            }); 
+        }
+    catch (error) {
+        next(error)
+    }
+}
+
+
+
 // get all users
 const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -89,6 +109,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 export const userController = {
     createStudent,
     createFaculty,
+    createAdmin,
     getUsers,
     getUserById,
     updateUser,

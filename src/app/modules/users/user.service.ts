@@ -5,11 +5,13 @@ import { IStudent } from "../student/student.interface";
 import { Student } from "../student/student.model";
 import { IUser } from "./user.interface";
 import { UserModel } from "./user.model";
-import { generateFacultyId, generateStudentId } from "./userUtills";
+import { generateAdminId, generateFacultyId, generateStudentId } from "./userUtills";
 import AppError from "../../errors/appErrors";
 import  httpStatus  from 'http-status';
 import { TFaculty } from "../faculty/faculty.interface";
 import { Faculty } from "../faculty/faculty.model";
+import { TAdmin } from "../admin/admin.interface";
+import { Admin } from "../admin/admin.model";
 // // create a new user as student role  
 const createStudent = async (password: string, payload: IStudent) => {
   const UserData : Partial<IUser> = {};
@@ -90,6 +92,54 @@ const createFaculty = async (password:string, payload: TFaculty)=>{
     throw error;
   }
 }
+//  create a new user as faculty role
+const createAdmin = async (password: string, payload: TAdmin) => {
+  const userData: Partial<IUser> = {};
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    // Set user information
+    userData.role = 'admin';
+    userData.password = password || (config.default_user_pass as string);
+    userData.id = await generateAdminId();
+
+    // Create User
+    const newUser = await UserModel.create([userData], { session });
+
+    if (!newUser.length) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Failed to create user',
+      );
+    }
+
+    // Set admin information
+    payload.id = newUser[0].id;
+    payload.user = newUser[0]._id;
+
+    // Create Admin
+    const newAdmin = await Admin.create([payload], { session });
+
+    if (!newAdmin.length) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Failed to create admin',
+      );
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+
+    return newAdmin[0];
+  } catch (error) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw error;
+  }
+};
 
 
 // get all users from database 
@@ -122,6 +172,7 @@ const deleteUser = async (id: string): Promise<IUser | null> => {
 export const userService = {
     createStudent,
     createFaculty,
+    createAdmin,
     getUsers,
     getUserById,
     updateUser,
