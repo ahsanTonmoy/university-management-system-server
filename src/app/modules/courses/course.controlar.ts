@@ -31,7 +31,7 @@ const getAllCourses = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await CourseService.getAllCoursesFromDB();
+    const result = await CourseService.getAllCoursesFromDB(req.query);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
