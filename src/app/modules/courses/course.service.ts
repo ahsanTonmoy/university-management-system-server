@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 import QueryBuilder from "../../builders/queryBuilders";
 import AppError from "../../errors/appErrors";
-import { TCourse } from "./course.interface";
-import { Course } from "./course.model";
+import { TCourse, TCourseFaculties } from "./course.interface";
+import { Course, courseFaculties } from "./course.model";
 import  httpStatus  from 'http-status';
+import { id, tr } from "zod/v4/locales";
+import { $input } from "zod/v4";
 
 const createCourseIntoDB = async (payload: TCourse) => {
   const result = await Course.create(payload);
@@ -13,7 +15,7 @@ const createCourseIntoDB = async (payload: TCourse) => {
 const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
     // find with query 
     const courseQuery = new QueryBuilder(Course.find()
-    .populate('preRequisiteCourses.course').where({isDeleted: false}), query
+    .populate('preRequisiteCourses.course').populate('faculties').where({isDeleted: false}), query
     )
     .search([])
     .filter()
@@ -25,8 +27,8 @@ const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
 
 const getSingleCourseFromDB = async (id: string) => {
   return await Course.findById(id).populate(
-    'preRequisiteCourses.course',
-  );
+    'preRequisiteCourses.course'
+  ).populate('faculties');
 };
 
 const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>,) => {
@@ -119,10 +121,50 @@ const deleteCourseFromDB = async (id: string) => {
   );
 };
 
+const assignFaculty = async(id: string,payload: Partial<TCourseFaculties>)=>{
+    console.log(payload)
+    const result = await courseFaculties.findByIdAndUpdate(
+        id,
+        {
+            course: id,
+            $addToSet:{
+                faculties: {$each: payload.faculties}
+            }
+        },
+        {
+            upsert:true,
+            new: true
+        }
+    ).populate("course").populate("faculties")
+
+    console.log(result)
+
+    return result
+}
+
+const deleteFaculty = async(id: string,payload: Partial<TCourseFaculties>)=>{
+    console.log(payload)
+    const result = await courseFaculties.findByIdAndUpdate(
+        id,
+        {
+            $pull: {faculties: {$in: payload.faculties}} 
+        },
+        {
+            new: true
+        }
+    ).populate("course").populate("faculties")
+
+    console.log(result)
+
+    return result
+}
+
 export const CourseService = {
   createCourseIntoDB,
   getAllCoursesFromDB,
   getSingleCourseFromDB,
   updateCourseIntoDB,
   deleteCourseFromDB,
+  assignFaculty,
+  deleteFaculty
 };

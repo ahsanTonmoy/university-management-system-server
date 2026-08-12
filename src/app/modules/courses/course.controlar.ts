@@ -74,7 +74,7 @@ const updateCourse = async (
 ) => {
   try {
     const { id } = req.params;
-
+    console.log(req.body)
     const result = await CourseService.updateCourseIntoDB(
       id as string,
       req.body,
@@ -113,11 +113,63 @@ const deleteCourse = async (
   }
 };
 
+
+// Update Course
+const assignFaculty = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    console.log(req.body)
+    const result = await CourseService.assignFaculty(
+      id as string,
+      req.body,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Course assign successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteFaculty = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    console.log(req.body)
+    const result = await CourseService.deleteFaculty(
+      id as string,
+      req.body,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'faculty remove successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const CourseController = {
   createCourse,
   getAllCourses,
   getSingleCourse,
   updateCourse,
   deleteCourse,
+  assignFaculty,
+  deleteFaculty
 };
 
