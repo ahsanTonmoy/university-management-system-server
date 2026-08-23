@@ -8,11 +8,8 @@ import { TOfferedCourse } from './offeredCourse.interface';
 import { Course } from '../courses/course.model';
 import { Faculty } from '../faculty/faculty.model';
 import { SemesterRegistration } from '../semester/semesterReg.model';
-import { academicSemester } from '../academicSemester/academicSemesterModel';
 import { academicFaculty } from '../academicFeculty/academicFacultyModel';
 import { academicDepartment } from '../academicDepartment/academicDepartment.model';
-
-
 
 
 // ===============================
@@ -22,6 +19,16 @@ import { academicDepartment } from '../academicDepartment/academicDepartment.mod
 const createOfferedCourseIntoDB = async (
   payload: TOfferedCourse,
 ) => {
+  const {
+    semesterRegistration,
+    academicFaculty: academicFacultyId,
+    academicDepartment: academicDepartmentId,
+    faculty,
+    section,
+    course,
+    maxCapacity,
+    schedule,
+  } = payload;
   // Step 1:
   // Check semester registration
 
@@ -41,24 +48,13 @@ const createOfferedCourseIntoDB = async (
   // Step 2:
   // Check academic semester
 
-  const isAcademicSemesterExists =
-    await academicSemester.findById(
-      payload.academicSemester,
-    );
-
-  if (!isAcademicSemesterExists) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'Academic semester not found!',
-    );
-  }
-
+  const isAcademicSemesterExists = isSemesterRegistrationExists.academicSemester;
   // Step 3:
   // Check academic faculty
 
   const isAcademicFacultyExists =
     await academicFaculty.findById(
-      payload.academicFaculty,
+      academicFacultyId,
     );
 
   if (!isAcademicFacultyExists) {
@@ -73,7 +69,7 @@ const createOfferedCourseIntoDB = async (
 
   const isAcademicDepartmentExists =
     await academicDepartment.findById(
-      payload.academicDepartment,
+      academicDepartmentId,
     );
 
   if (!isAcademicDepartmentExists) {
@@ -135,9 +131,10 @@ const createOfferedCourseIntoDB = async (
 
   // Step 8:
   // Create
-
-  const result = await OfferedCourse.create(payload);
-
+  const result = await OfferedCourse.create({
+  ...payload,
+  academicSemester: isAcademicSemesterExists,
+});
   return result;
 };
 
